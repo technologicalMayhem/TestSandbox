@@ -4,7 +4,7 @@
     {
         public int ReturnNumber(int number)
         {
-            return number;
+            return ++number;
         }
     }
 }
