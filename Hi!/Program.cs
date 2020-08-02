@@ -13,6 +13,7 @@ namespace Hi_
         private static void Greet()
         {
             Console.WriteLine("Hello");
+            Console.WriteLine("Beautiful");
             Console.WriteLine("World!");
         }
     }
