@@ -1,20 +1,31 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Hi_
 {
     class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
-            Greet();
-            Console.WriteLine("I can't believe how rude that was of you :("); //dostuff
+            Random random = new Random();
+            var list = new List<Test>();
+            for (int i = 0; i < 1000000; i++)
+            {
+                list.Add(new Test() { 
+                    A = random.Next(0, 10000), 
+                    B = random.Next(0, 10000), 
+                    C = random.Next(0, 10000) 
+                });
+            }
+            Console.ReadLine();
         }
+    }
 
-        private static void Greet()
-        {
-            Console.WriteLine("Hello");
-            Console.WriteLine("Beautiful");
-            Console.WriteLine("World!");
-        }
+    class Test
+    {
+        public int A;
+        public int B;
+        public int C;
     }
 }

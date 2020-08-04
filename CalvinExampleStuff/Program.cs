@@ -1,5 +1,7 @@
-﻿using System;
+﻿using ConsoleAppUtil;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CalvinExampleStuff
 {
@@ -11,37 +13,57 @@ namespace CalvinExampleStuff
             Console.Write("Give your company a name: ");
             string companyName = Console.ReadLine();
             Company = new Company(companyName);
-            GetDefaultEmployess();
-            ShowMenu();
-            //AddEmployees(company);
-            PrintSummary();
-            Company.FireEmployes();
-            PrintSummary();
+            GetDefaultEmployees();
+            var menu = new Menu(new []
+            {
+                new MenuItem("Add Employees", AddEmployees),
+                new MenuItem("Fire Employees", Company.FireEmployes),
+                new MenuItem("Print Summary", PrintSummary),
+                new MenuItem("Quit", () => Environment.Exit(0))
+            });
+            menu.Header = "Main Menu";
+            while(true)
+            {
+                menu.ShowMenu();
+            }
         }
 
         private static void ShowMenu()
         {
-            //TODO: Turn this into a List<Tuple<string, Action>>
-            Dictionary<string, Action> actions = new Dictionary<string, Action>();
-            actions.Add("Add Employees", AddEmployees);
-            actions.Add("Fire Employees", Company.FireEmployes);
-            actions.Add("Print Summary", PrintSummary);
-            actions.Add("Quit", () => Environment.Exit(0));
+            var actions = new List<(string, Action)>()
+            {
+                ("Add Employees", AddEmployees),
+                ("Fire Employees", Company.FireEmployes),
+                ("Print Summary", PrintSummary),
+                ("Quit", () => Environment.Exit(0))
+            };
 
-            var n = 0;
+            var num = 0;
             foreach (var action in actions)
             {
-                Console.WriteLine($"{++n}. {action.Key}");
+                Console.WriteLine($"{++num}. {action.Item1}");
             }
+
             Console.WriteLine();
-            Console.Write("Please make your choice of what you wanna do: ");
-            var result = Console.ReadLine();
-            //TODO: Do error handling if no number is provided
-            var resultNum = int.Parse(result);
-            //TODO: Make the thing get the right thing out of the list of actions
+            Console.Write($"Please make your choice [1 - {actions.Count}]: ");
+            var choice = 0;
+            while (true)
+            {
+                string text = Console.ReadLine();
+                if(text.ToCharArray().All(x => char.IsNumber(x)))
+                {
+                    choice = int.Parse(text);
+                    if (choice > 0 && choice < actions.Count + 1)
+                    {
+                        break;
+                    }
+                }
+                Console.Write($"Please enter a valid number [1 - {actions.Count}]: ");
+            }
+            actions[choice - 1].Item2.Invoke();
         }
 
-        private static void GetDefaultEmployess()
+        private static void GetDefaultEmployees()
         {
             Employee[] employees = new Employee[]
             {
@@ -89,68 +111,6 @@ namespace CalvinExampleStuff
                     break;
                 }
             }
-        }
-    }
-
-    class Employee
-    {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Email { get => $"{FirstName[0]}.{LastName}@{Company.GetNameForEmail()}.com".ToLower(); }
-        public int AnnualSalary { get; set; }
-        public int MonthlySalary => AnnualSalary / 12;
-        public Company Company { get; set; }
-
-        public Employee(string firstName, string lastName, int annualSalary, Company company)
-        {
-            FirstName = firstName;
-            LastName = lastName;
-            AnnualSalary = annualSalary;
-            Company = company;
-        }
-    }
-
-    class Company
-    {
-        public string CompanyName { get; set; }
-        public List<Employee> Employees { get; set; }
-
-        public Company(string companyName)
-        {
-            CompanyName = companyName;
-            Employees = new List<Employee>();
-        }
-
-        public string GetNameForEmail()
-        {
-            return CompanyName.Replace(".", "").Replace(" ", "");
-        }
-
-        public void PrintBanner()
-        {
-            Console.WriteLine($" -###- {CompanyName} -###-");
-        }
-
-        public void FireEmployes()
-        {
-            Console.Write("First Name of Person to fire:");
-            string firstName = Console.ReadLine();
-            List<Employee> employeesToFire = Employees.FindAll(x => x.FirstName == firstName);
-            if(employeesToFire.Count == 0)
-            {
-                Console.WriteLine("No employees match search.");
-                return;
-            }
-            foreach (var employee in Employees)
-            {
-                Console.WriteLine($"Do you want to fire {employee.FirstName} {employee.LastName}? Press 'y' to fire or any key to continue.");
-                var key = Console.ReadKey(true).KeyChar.ToString();
-                if (key == "y")
-                {
-                    Employees.Remove(employee);
-                }
-            }
-            Console.WriteLine("No more employees left in search.");
         }
     }
 }
