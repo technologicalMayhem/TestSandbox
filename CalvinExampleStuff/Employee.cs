@@ -1,13 +1,13 @@
 ﻿    namespace CalvinExampleStuff
 {
-    class Employee
+    internal class Employee
     {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Email { get => $"{FirstName[0]}.{LastName}@{Company.GetNameForEmail()}.com".ToLower(); }
-        public int AnnualSalary { get; set; }
+        public string FirstName { get; }
+        public string LastName { get; }
+        public string Email => $"{FirstName[0]}.{LastName}@{Company.GetNameForEmail()}.com".ToLower();
+        public int AnnualSalary { get; }
         public int MonthlySalary => AnnualSalary / 12;
-        public Company Company { get; set; }
+        private Company Company { get; }
 
         public Employee(string firstName, string lastName, int annualSalary, Company company)
         {

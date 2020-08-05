@@ -5,8 +5,8 @@ namespace CalvinExampleStuff
 {
     class Company
     {
-        public string CompanyName { get; set; }
-        public List<Employee> Employees { get; set; }
+        private string CompanyName { get; }
+        public List<Employee> Employees { get; }
 
         public Company(string companyName)
         {
@@ -24,7 +24,7 @@ namespace CalvinExampleStuff
             Console.WriteLine($" -###- {CompanyName} -###-");
         }
 
-        public void FireEmployes()
+        public void FireEmployees()
         {
             Console.Write("First Name of Person to fire:");
             string firstName = Console.ReadLine();

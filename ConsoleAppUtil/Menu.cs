@@ -6,8 +6,8 @@ namespace ConsoleAppUtil
 {
     public class Menu
     {
-        public List<MenuItem> MenuItems { get; private set; }
-        public string Header { get; set; } = null;
+        private List<MenuItem> MenuItems { get; }
+        public string Header { get; set; }
 
         public Menu(IEnumerable<MenuItem> menuItems)
         {
@@ -26,11 +26,11 @@ namespace ConsoleAppUtil
 
             Console.WriteLine();
             Console.Write($"Please make your choice [1 - {MenuItems.Count}]: ");
-            var choice = 0;
+            int choice;
             while (true)
             {
                 var text = Console.ReadLine();
-                if (text.ToCharArray().All(x => char.IsNumber(x)))
+                if (text != null && text.ToCharArray().All(char.IsNumber))
                 {
                     choice = int.Parse(text);
                     if (choice > 0 && choice <= MenuItems.Count)
@@ -46,8 +46,8 @@ namespace ConsoleAppUtil
 
     public struct MenuItem
     {
-        public string Descriptor { get; set; }
-        public Action Action { get; set; }
+        public string Descriptor { get; }
+        public Action Action { get; }
         public bool Disabled { get; set; }
 
         public MenuItem(string descriptor, Action action) : this()
