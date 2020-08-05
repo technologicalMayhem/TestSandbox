@@ -30,7 +30,7 @@ namespace ConsoleAppUtil
             while (true)
             {
                 var text = Console.ReadLine();
-                if (text != null && text.ToCharArray().All(char.IsNumber))
+                if (!string.IsNullOrEmpty(text) && text.ToCharArray().All(char.IsNumber))
                 {
                     choice = int.Parse(text);
                     if (choice > 0 && choice <= MenuItems.Count)
