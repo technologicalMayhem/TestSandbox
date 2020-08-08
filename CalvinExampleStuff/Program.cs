@@ -1,5 +1,5 @@
-﻿using ConsoleAppUtil;
-using System;
+﻿using System;
+using ConsoleAppUtil;
 
 namespace CalvinExampleStuff
 {
@@ -24,10 +24,7 @@ namespace CalvinExampleStuff
             {
                 Header = "Main Menu"
             };
-            while (!ShuttingDown)
-            {
-                menu.ShowMenu();
-            }
+            while (!ShuttingDown) menu.ShowMenu();
         }
 
         private static void GetDefaultEmployees()
@@ -41,7 +38,7 @@ namespace CalvinExampleStuff
                 new Employee("Casey", "Maxwell", 70000, Company),
                 new Employee("Lana", "Jones", 40000, Company),
                 new Employee("Peter", "Jackson", 110000, Company),
-                new Employee("Sam", "Hampshire", 90000, Company),
+                new Employee("Sam", "Hampshire", 90000, Company)
             };
             Company.Employees.AddRange(employees);
         }
@@ -75,10 +72,7 @@ namespace CalvinExampleStuff
 
                 Console.WriteLine("Press any key to continue or press n to stop.");
                 var v = Console.ReadKey(true).KeyChar;
-                if (v.ToString().ToLower() == "n")
-                {
-                    break;
-                }
+                if (v.ToString().ToLower() == "n") break;
             }
         }
     }

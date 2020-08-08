@@ -6,23 +6,20 @@ namespace ConsoleAppUtil
 {
     public class Menu
     {
-        private List<MenuItem> MenuItems { get; }
-        public string Header { get; set; }
-
         public Menu(IEnumerable<MenuItem> menuItems)
         {
             MenuItems = new List<MenuItem>(menuItems);
         }
+
+        private List<MenuItem> MenuItems { get; }
+        public string Header { get; set; }
 
         public void ShowMenu()
         {
             if (Header != null) Console.WriteLine(Header);
 
             var num = 0;
-            foreach (var item in MenuItems)
-            {
-                Console.WriteLine($"{++num}. {item.Descriptor}");
-            }
+            foreach (var item in MenuItems) Console.WriteLine($"{++num}. {item.Descriptor}");
 
             Console.WriteLine();
             Console.Write($"Please make your choice [1 - {MenuItems.Count}]: ");
@@ -33,13 +30,12 @@ namespace ConsoleAppUtil
                 if (!string.IsNullOrEmpty(text) && text.ToCharArray().All(char.IsNumber))
                 {
                     choice = int.Parse(text);
-                    if (choice > 0 && choice <= MenuItems.Count)
-                    {
-                        break;
-                    }
+                    if (choice > 0 && choice <= MenuItems.Count) break;
                 }
+
                 Console.Write($"Please enter a valid number [1 - {MenuItems.Count}]: ");
             }
+
             MenuItems[choice - 1].Action.Invoke();
         }
     }

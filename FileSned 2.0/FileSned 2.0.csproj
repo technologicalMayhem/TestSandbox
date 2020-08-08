@@ -1,13 +1,17 @@
-<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
         <TargetFramework>netcoreapp3.1</TargetFramework>
-        <UseWindowsForms>true</UseWindowsForms>
+        <RootNamespace>FileSned</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\ConsoleAppUtil\ConsoleAppUtil.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="ByteSize" Version="2.0.0" />
     </ItemGroup>
 
 </Project>
