@@ -12,7 +12,7 @@ namespace FileSned
 {
     public static class Server
     {
-        public static string StoragePath { get; } = "Storage";
+        public static string StoragePath { get; private set; } = "Storage";
 
         private static List<Upload> _uploads;
         private static bool _shouldShutdown;
@@ -20,6 +20,12 @@ namespace FileSned
 
         public static void RunServer()
         {
+            RunServer("Storage");
+        }
+
+        public static void RunServer(string storagePath)
+        {
+            StoragePath = storagePath;
             _shouldShutdown = false;
             _uploads = new List<Upload>();
             Directory.CreateDirectory(StoragePath);

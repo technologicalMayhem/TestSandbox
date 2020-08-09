@@ -13,12 +13,14 @@ namespace FileSned
     {
         public static void RunClient()
         {
-            var filePath = UserInput.GetInput("Give filename", File.Exists);
-            var address = IPAddress.None;
-            UserInput.GetInput("Give address", s => IPAddress.TryParse(s, out address));
+            var (filePath, address) = GetUserInput();
+            TransmitFiles(address, filePath);
+        }
 
-            var tcpClient = new TcpClient(address.ToString(), Program.Port);
-            SpinWait.SpinUntil(() => tcpClient.Connected);
+        public static void TransmitFiles(string address, string filePath)
+        {
+            var tcpClient = new TcpClient();
+            tcpClient.Connect(address, Program.Port);
 
             //Todo: Add error handling
             Console.Clear();
@@ -27,6 +29,13 @@ namespace FileSned
 
             tcpClient.Close();
             Console.WriteLine("Transfer done!");
+        }
+
+        private static (string filePath, string address) GetUserInput()
+        {
+            var filePath = UserInput.GetInput("Give filename", File.Exists);
+            var address = UserInput.GetInput("Give address", s => IPAddress.TryParse(s, out _));
+            return (filePath, address);
         }
 
         private static void UploadFile(Stream uploadTarget, string filePath)
