@@ -5,7 +5,6 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using ConsoleAppUtil;
 
 namespace FileSned
@@ -17,10 +16,10 @@ namespace FileSned
             var filePath = UserInput.GetInput("Give filename", File.Exists);
             var address = IPAddress.None;
             UserInput.GetInput("Give address", s => IPAddress.TryParse(s, out address));
-            
+
             var tcpClient = new TcpClient(address.ToString(), Program.Port);
             SpinWait.SpinUntil(() => tcpClient.Connected);
-            
+
             //Todo: Add error handling
             Console.Clear();
             Console.WriteLine($"Uploading: {new FileInfo(filePath).Name}");
@@ -42,7 +41,7 @@ namespace FileSned
 
             uploadTarget.Write(header);
             var task = fileStream.CopyToAsync(uploadTarget);
-            
+
             while (!task.IsCompletedSuccessfully)
             {
                 Console.WriteLine((fileStream.Position / (double) info.Length).ToString("P1"));

@@ -9,6 +9,18 @@ namespace FileSned
 {
     public class Upload
     {
+        public bool IsRunning => _thread.IsAlive;
+        public IPAddress IpAddress => ((IPEndPoint) _client.Client.RemoteEndPoint).Address;
+        public UploadState State { get; private set; }
+        public TimeSpan RunningTime => IsRunning ? DateTime.Now.Subtract(_startTime) : _endTime;
+        public string FileName { get; private set; }
+        public long FileSize { get; private set; }
+
+        public double Progress =>
+            _fileStream != null && _fileStream.Position != 0
+                ? _fileStream.Position / (double) FileSize
+                : 0;
+
         private readonly TcpClient _client;
         private readonly Stream _netStream;
         private readonly DateTime _startTime;
@@ -27,18 +39,6 @@ namespace FileSned
             _thread = new Thread(ReceiveFile);
             _thread.Start();
         }
-
-        public bool IsRunning => _thread.IsAlive;
-        public IPAddress IpAddress => ((IPEndPoint) _client.Client.RemoteEndPoint).Address;
-        public UploadState State { get; private set; }
-        public TimeSpan RunningTime => IsRunning ? DateTime.Now.Subtract(_startTime) : _endTime;
-        public string FileName { get; private set; }
-        public long FileSize { get; private set; }
-
-        public double Progress =>
-            _fileStream != null && _fileStream.Position != 0
-                ? _fileStream.Position / (double) FileSize
-                : 0;
 
         private void ReceiveFile()
         {

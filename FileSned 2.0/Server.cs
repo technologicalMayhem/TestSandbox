@@ -1,20 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
 using System.Threading;
 using ByteSizeLib;
 using Microsoft.VisualBasic;
 
 namespace FileSned
 {
-    public class Server
+    public static class Server
     {
         public static string StoragePath { get; } = "Storage";
-        
+
         private static List<Upload> _uploads;
         private static bool _shouldShutdown;
         private static readonly object RenderLock = new object();
@@ -30,10 +28,7 @@ namespace FileSned
             Console.CancelKeyPress += (o, args) => _shouldShutdown = true;
             while (!_shouldShutdown)
             {
-                if (tcpListener.Pending())
-                {
-                    _uploads.Add(new Upload(tcpListener.AcceptTcpClient()));
-                }
+                if (tcpListener.Pending()) _uploads.Add(new Upload(tcpListener.AcceptTcpClient()));
 
                 Thread.Sleep(1000);
                 Render();
@@ -86,7 +81,7 @@ namespace FileSned
                         ByteSize.FromBytes(upload.FileSize).ToString()
                     };
                     if (upload.State == UploadState.Running) output.Add(upload.Progress.ToString("P1"));
-                    Console.Write(Strings.Join(output.ToArray(), " ").PadRight(Console.BufferWidth));
+                    Console.Write(Strings.Join(output.ToArray()).PadRight(Console.BufferWidth));
                     Console.ResetColor();
                 }
             }

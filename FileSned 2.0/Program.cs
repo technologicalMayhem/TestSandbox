@@ -1,14 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Net.Security;
-using System.Net.Sockets;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using ByteSizeLib;
 using ConsoleAppUtil;
 
 namespace FileSned
@@ -22,10 +13,7 @@ namespace FileSned
             Console.OutputEncoding = Encoding.Unicode;
             if (args.Length > 0)
             {
-                if (args[0] == "server")
-                {
-                    Server.RunServer();
-                }
+                if (args[0] == "server") Server.RunServer();
             }
             else
             {
@@ -37,7 +25,7 @@ namespace FileSned
                     {
                         new MenuItem("Client", Client.RunClient),
                         new MenuItem("Server", Server.RunServer),
-                        new MenuItem("Exit", () => shutdown = true),
+                        new MenuItem("Exit", () => shutdown = true)
                     }).ShowMenu();
                 }
             }

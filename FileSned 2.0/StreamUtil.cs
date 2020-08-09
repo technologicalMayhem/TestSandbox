@@ -5,7 +5,7 @@ namespace FileSned
     public static class StreamUtil
     {
         /// <summary>
-        /// Reads a certain amount of bytes from the stream and returns them.
+        ///     Reads a certain amount of bytes from the stream and returns them.
         /// </summary>
         /// <param name="stream"></param>
         /// <param name="amount">Amount of bytes to read.</param>
