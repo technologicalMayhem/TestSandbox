@@ -42,15 +42,9 @@ namespace FileSned
 
         private void ReceiveFile()
         {
-            var nameLengthBuf = new byte[4];
-            _netStream.Read(nameLengthBuf);
-            var nameLength = BitConverter.ToInt32(nameLengthBuf);
-            var nameBuf = new byte[nameLength];
-            _netStream.Read(nameBuf);
-            FileName = Encoding.UTF8.GetString(nameBuf);
-            var sizeBuf = new byte[8];
-            _netStream.Read(sizeBuf);
-            FileSize = BitConverter.ToInt64(sizeBuf);
+            var nameLength = BitConverter.ToInt32(_netStream.ReadExactly(4));
+            FileName = Encoding.UTF8.GetString(_netStream.ReadExactly(nameLength));
+            FileSize = BitConverter.ToInt64(_netStream.ReadExactly(8));
 
             _fileStream = File.OpenWrite(Path.Combine(Server.StoragePath, FileName));
             var copyToAsync = _netStream.CopyToAsync(_fileStream);
