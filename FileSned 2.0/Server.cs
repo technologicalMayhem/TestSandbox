@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -21,9 +22,11 @@ namespace FileSned
         {
             _shouldShutdown = false;
             _uploads = new List<Upload>();
+            Directory.CreateDirectory(StoragePath);
             Console.Clear();
             var tcpListener = new TcpListener(IPAddress.Any, Program.Port);
             tcpListener.Start();
+
             Console.WriteLine($"Server is now listening on port {Program.Port}");
             Console.CancelKeyPress += (o, args) => _shouldShutdown = true;
             while (!_shouldShutdown)
