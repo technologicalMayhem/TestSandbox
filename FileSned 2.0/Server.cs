@@ -1,19 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using System.Text;
 using System.Threading;
+using ByteSizeLib;
+using Microsoft.VisualBasic;
 
 namespace FileSned
 {
     public class Server
     {
+        public static string StoragePath { get; } = "Storage";
         
         private static List<Upload> _uploads;
         private static bool _shouldShutdown;
         private static readonly object RenderLock = new object();
-        
+
         public static void RunServer()
         {
             _shouldShutdown = false;
@@ -41,7 +46,7 @@ namespace FileSned
                 Console.WriteLine("Server is shutting down.".PadRight(Console.WindowWidth));
             }
 
-            while (_uploads.All(t => !t.IsRunning))
+            while (_uploads.Any(t => t.IsRunning))
             {
                 Render();
                 Thread.Sleep(1000);
@@ -73,9 +78,15 @@ namespace FileSned
                             throw new ArgumentOutOfRangeException();
                     }
 
-                    Console.Write(
-                        $"[{upload.RunningTime:mm\\:ss}] {upload.IpAddress} -> {upload.FileName}"
-                            .PadRight(Console.BufferWidth));
+                    var output = new List<string>
+                    {
+                        $"[{upload.RunningTime:mm\\:ss}]",
+                        upload.IpAddress.ToString(),
+                        upload.FileName,
+                        ByteSize.FromBytes(upload.FileSize).ToString()
+                    };
+                    if (upload.State == UploadState.Running) output.Add(upload.Progress.ToString("P1"));
+                    Console.Write(Strings.Join(output.ToArray(), " ").PadRight(Console.BufferWidth));
                     Console.ResetColor();
                 }
             }

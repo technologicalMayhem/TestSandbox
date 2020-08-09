@@ -13,7 +13,7 @@ using ConsoleAppUtil;
 
 namespace FileSned
 {
-    internal class Program
+    internal static class Program
     {
         public const int Port = 8000;
 
@@ -32,9 +32,10 @@ namespace FileSned
                 var shutdown = false;
                 while (!shutdown)
                 {
+                    Console.Clear();
                     new Menu(new[]
                     {
-                        new MenuItem("Client", Client.UploadFile),
+                        new MenuItem("Client", Client.RunClient),
                         new MenuItem("Server", Server.RunServer),
                         new MenuItem("Exit", () => shutdown = true),
                     }).ShowMenu();
