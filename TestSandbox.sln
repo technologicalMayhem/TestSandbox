@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Custom ASP.Net", "Custom AS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileSned 2.0", "FileSned 2.0\FileSned 2.0.csproj", "{C7BBE5A5-8464-4164-9A00-B3233FE1FD95}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Playground", "Playground\Playground.csproj", "{0918D189-B94C-421E-AA71-815ED743E2A2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{C7BBE5A5-8464-4164-9A00-B3233FE1FD95}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C7BBE5A5-8464-4164-9A00-B3233FE1FD95}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C7BBE5A5-8464-4164-9A00-B3233FE1FD95}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0918D189-B94C-421E-AA71-815ED743E2A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0918D189-B94C-421E-AA71-815ED743E2A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0918D189-B94C-421E-AA71-815ED743E2A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0918D189-B94C-421E-AA71-815ED743E2A2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
