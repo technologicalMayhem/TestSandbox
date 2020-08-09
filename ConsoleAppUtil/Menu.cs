@@ -6,13 +6,13 @@ namespace ConsoleAppUtil
 {
     public class Menu
     {
+        private List<MenuItem> MenuItems { get; }
+        public string Header { get; set; }
+
         public Menu(IEnumerable<MenuItem> menuItems)
         {
             MenuItems = new List<MenuItem>(menuItems);
         }
-
-        private List<MenuItem> MenuItems { get; }
-        public string Header { get; set; }
 
         public void ShowMenu()
         {

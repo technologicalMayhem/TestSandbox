@@ -5,14 +5,14 @@ namespace CalvinExampleStuff
 {
     internal class Company
     {
+        private string CompanyName { get; }
+        public List<Employee> Employees { get; }
+
         public Company(string companyName)
         {
             CompanyName = companyName;
             Employees = new List<Employee>();
         }
-
-        private string CompanyName { get; }
-        public List<Employee> Employees { get; }
 
         public void Something()
         {

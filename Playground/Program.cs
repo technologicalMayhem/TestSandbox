@@ -5,11 +5,11 @@ using static System.Console;
 
 namespace Playground
 {
-    class Program
+    internal class Program
     {
         private static (int, int) _windowSize = (0, 0);
 
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             double progress = 0;
             while (true)
@@ -38,10 +38,7 @@ namespace Playground
                 SetCursorPosition(0, WindowHeight - 2);
                 var barLength = Math.Ceiling(WindowWidth * (percent / 100));
                 var builder = new StringBuilder();
-                for (var i = 0; i < barLength; i++)
-                {
-                    builder.Append("=");
-                }
+                for (var i = 0; i < barLength; i++) builder.Append("=");
 
                 Write(builder.ToString().PadRight(WindowWidth));
             }
